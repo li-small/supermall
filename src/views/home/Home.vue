@@ -117,6 +117,15 @@ export default {
     this.$bus.$on("homeImageLoad", () => {
       ref();
     });
+
+    // 解决一进来时候不刷新不能滚动
+    window.addEventListener("resize", () => {
+      if (window.innerWidth <= 900) {
+        setTimeout(() => {
+          this.$router.go(0);
+        }, 50);
+      }
+    });
   },
   methods: {
     /**
@@ -184,7 +193,6 @@ export default {
 };
 </script>
 
-加了scoped 里面的样式就有会作用域 只针对当前类 例如这里的content样式Scroll中content不会有
 <style scoped>
 #home {
   /* vh是浏览视口高度 100vh是100%视口 */
