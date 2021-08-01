@@ -34,7 +34,10 @@
         ref="tabControl2"
       ></tab-control>
       <!-- 类型栏内容模块 -->
-      <goods-list :goods="goods[currentTab].list" ref="test"></goods-list>
+      <goods-list
+        :goods="goods[currentTab].list"
+        ref="goodsContent"
+      ></goods-list>
     </scroll>
     <!-- 类型栏内容的返回顶部小模块 -->
     <!-- 需要监听一个组件的原生事件时，必须给对应的事件加上.native修饰符 才能进行监听 -->
@@ -85,6 +88,7 @@ export default {
       isTab: false,
       tabOffsetTop: 0,
       saveY: 0,
+      controlOffsetTop: 0,
     };
   },
   // 组件被创建出来时发送网络请求
@@ -135,12 +139,15 @@ export default {
       switch (index) {
         case 0:
           this.currentTab = "pop";
+          this.$refs.back.bscroll.scrollTo(0, -this.goods["pop"].offsetTop);
           break;
         case 1:
           this.currentTab = "new";
+          this.$refs.back.bscroll.scrollTo(0, -this.goods["new"].offsetTop);
           break;
         case 2:
           this.currentTab = "sell";
+          this.$refs.back.bscroll.scrollTo(0, -this.goods["sell"].offsetTop);
           break;
       }
       // 新旧切换类型栏记录当前选中的index
@@ -151,8 +158,13 @@ export default {
       // 1. 可视区y大于1000显示返回顶部按钮 否则隐藏
       this.isShow = -position.y > 1000;
 
-      // 2. 可视区大于到了类型切换栏的offsetTop就吸顶
+      // 2. 可视区大于类型切换栏的offsetTop就吸顶
       this.isTab = -position.y > this.tabOffsetTop;
+
+      // 3. 记录当前切换类型栏浏览的滚动状态
+      if (-position.y > this.contentOffsetTop) {
+        this.goods[this.currentTab].offsetTop = -position.y;
+      }
     },
     pullUpHandle() {
       // 拉到最底部重新调用一次这个方法加载数据
@@ -164,8 +176,19 @@ export default {
     swiperImageLoadHandle() {
       // 获取tabConto2的offsetTop
       // 所有的组件都有一个属性$el: 用于获取组件中的元素
-      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
-      this.$refs.back.refresh();
+      setTimeout(() => {
+        this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
+        this.$refs.back.refresh();
+        console.log(this.tabOffsetTop);
+      }, 50);
+
+      // 初始化类型栏内容offsetTop值
+      setTimeout(() => {
+        this.contentOffsetTop = this.$refs.goodsContent.$el.offsetTop - 35;
+        this.goods["pop"].offsetTop = this.contentOffsetTop;
+        this.goods["new"].offsetTop = this.contentOffsetTop;
+        this.goods["sell"].offsetTop = this.contentOffsetTop;
+      }, 50);
     },
 
     /**

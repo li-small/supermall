@@ -25,6 +25,7 @@
       <detail-goods-info
         :detail-info="detailInfo"
         @imageLoad="imageLoadHandle"
+        ref="goodsDetail"
       ></detail-goods-info>
       <!-- 商品参数信息 -->
       <detail-param-info
@@ -155,7 +156,11 @@ export default {
       // 图片加载完获取准确的offsetTop
       this.navTopYs = [];
       this.navTopYs.push(0);
-      this.navTopYs.push(this.$refs.params.$el.offsetTop);
+      this.navTopYs.push(
+        this.$refs.params.$el.offsetTop
+          ? this.$refs.params.$el.offsetTop
+          : this.$refs.goodsDetail.$el.offsetTop
+      );
       this.navTopYs.push(this.$refs.common.$el.offsetTop);
       this.navTopYs.push(this.$refs.recommends.$el.offsetTop);
     },
@@ -164,7 +169,7 @@ export default {
     },
     titleClickHandle(index) {
       // 点击导航栏 滚动到对应的模块
-      this.$refs.back.bscroll.scrollTo(0, -this.navTopYs[index], 1000);
+      this.$refs.back.bscroll.scrollTo(0, -this.navTopYs[index], 100);
     },
     scrollHandle(position) {
       // 1. 滚动到对应模块时 导航栏改变

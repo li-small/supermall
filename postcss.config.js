@@ -1,4 +1,4 @@
-/* module.exports = {
+module.exports = {
   plugins: {
     autoprefixer: {},
     "postcss-px-to-viewport": {
@@ -11,4 +11,4 @@
       mediaQuery: false // 允许在媒体查询中转换`px`
     }
   }
-} */
+}

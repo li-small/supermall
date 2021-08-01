@@ -44,7 +44,7 @@ const routes = [
 const router = new VueRouter({
   routes,
   // 路径显示变成html5 history模式
-  mode: 'history'
+  // mode: 'history'
 })
 
 

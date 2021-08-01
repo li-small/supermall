@@ -4,7 +4,7 @@ import axios from 'axios'
 export function request(config) {
   // 1. 创建axios实例
   const instance1 = axios.create({
-    baseURL: '',  // 需要接口可以去找coderwhy老师
+    baseURL: 'http://152.136.185.210:7878/api/m5',
     timeout: 2000
   })
 
