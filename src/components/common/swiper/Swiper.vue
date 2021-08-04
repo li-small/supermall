@@ -1,7 +1,7 @@
 <template>
   <div id="hy-swiper">
     <div
-      class="swiper"
+      class="commonSwiper"
       @touchstart="touchStart"
       @touchmove="touchMove"
       @touchend="touchEnd"
@@ -59,7 +59,7 @@ export default {
 
       // 2.开启定时器
       this.startTimer();
-    }, 3000);
+    }, 500);
   },
   methods: {
     /**
@@ -129,7 +129,7 @@ export default {
      */
     handleDom: function () {
       // 1.获取要操作的元素
-      let swiperEl = document.querySelector(".swiper");
+      let swiperEl = document.querySelector(".commonSwiper");
       let slidesEls = swiperEl.getElementsByClassName("slide");
 
       // 2.保存个数
@@ -234,7 +234,7 @@ export default {
   position: relative;
 }
 
-.swiper {
+.commonSwiper {
   display: flex;
 }
 
